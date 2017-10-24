@@ -49,29 +49,31 @@ void list_add(List lst, double elem)
 
 Layer layer_init()
 {
-  
+  Layer lyr = malloc(sizeof(Layer));
+  lyr->next = NULL;
+  lyr->pref = NULL;
 }
 
 List layer_get_content(Layer lay)
 {
-
+  return lay->content;
 }
 
 List layer_get_prev_content(Layer lay)
 {
-
+  return (layer->prev != NULL)?layer->prev->content:list_init();
 }
 
 int layer_is_enter(Layer lay)
 {
-
+  return lay->prev == NULL;
 }
 
 int layer_is_exit(Layer lay)
 {
-
+  return lay->next == NULL;
 }
-int layer_add(Layer lay, List lst)
+void layer_add(Layer lay, List lst)
 {
-
+  l
 }
