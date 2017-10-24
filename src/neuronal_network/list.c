@@ -16,22 +16,40 @@ List list_init()
 
 size_t list_length(List lst)
 {
-
+  List tmp = lst;
+  size_t res = 0;
+  while (tmp->next!=NULL)
+  {
+    size_t++;
+    tmp = tmp->next;
+  }
+  return res;
 }
 
 double list_get(List lst)
 {
+  return lst->val;
+}
 
+void list_set(List lst, double elem)
+{
+  lst->val = elem;
+}
+
+int list_empty(List lst)
+{
+  return lst->next == NULL;
 }
 
 void list_add(List lst, double elem)
 {
-
+  lst->next = list_init();
+  lst->next->val = elem;
 }
 
 Layer layer_init()
 {
-
+  
 }
 
 List layer_get_content(Layer lay)

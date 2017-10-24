@@ -19,6 +19,7 @@ List list_init();
 size_t list_length(List lst);
 double list_get(List lst);
 void list_add(List lst, double elem);
+void list_set(List lst, double elem);
 
 Layer layer_init();
 List layer_get_content(Layer lay);
