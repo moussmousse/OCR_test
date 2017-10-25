@@ -2,6 +2,11 @@
  *  all fuctions necessary to use linked lists	*/
 
 
+typedef struct Neuro{
+  struct Neuro *next;
+  struct List *link;
+  double weight;
+}Neuro;
 
 typedef struct List{
   struct List *next;
@@ -10,22 +15,23 @@ typedef struct List{
 
 typedef struct Layer{
   struct Layer *next;
-  struct Layer *prev;
-  List content;
-}
+  Neuro *content;
+}Layer;
 
 
-List list_init();
-size_t list_length(List lst);
-double list_get(List lst);
-void list_add(List lst, double elem);
-void list_set(List lst, double elem);
+List *list_init();
+size_t list_length(List *lst);
+double list_get(List *lst);
+void list_add(List *lst, double elem);
+void list_set(List *lst, double elem);
 
-Layer layer_init();
-List layer_get_content(Layer lay);
-List layer_get_prev_content(Layer lay);
-int layer_is_enter(Layer lay);
-int layer_is_exit(Layer lay);
-int layer_add(Layer lay, List lst);
+Layer *layer_init();
+Neuro *layer_get_content(Layer *lay);
+int layer_is_exit(Layer *lay);
+void layer_add(Layer *lay, Neuro *neur);
 
-
+Neuro *neuro_init();
+List *neuro_get_link(Neuro *ner);
+double neuro_get_weight(Neuro *ner);
+void neuro_set_weight(Neuro *ner, double wei);
+void neuro_add(Neuro *ner, List	*link);

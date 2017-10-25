@@ -1,79 +1,106 @@
 /* list.c */
 
 #include <stdlib.h>
-#include <stdih.h>
+#include <stdio.h>
 
 #include "list.h"
 
 
 
-List list_init()
+/*  LIST */
+
+List *list_init()
 {
-  List lst = Malloc(sizeof(List));
+  List *lst = malloc(sizeof(List));
   lst -> next = NULL;
   return lst;
 }
 
-size_t list_length(List lst)
+size_t list_length(List *lst)
 {
-  List tmp = lst;
+  List *tmp = lst;
   size_t res = 0;
   while (tmp->next!=NULL)
   {
-    size_t++;
+    res++;
     tmp = tmp->next;
   }
   return res;
 }
 
-double list_get(List lst)
+double list_get(List *lst)
 {
   return lst->val;
 }
 
-void list_set(List lst, double elem)
+void list_set(List *lst, double elem)
 {
   lst->val = elem;
 }
 
-int list_empty(List lst)
+int list_empty(List *lst)
 {
   return lst->next == NULL;
 }
 
-void list_add(List lst, double elem)
+void list_add(List *lst, double elem)
 {
   lst->next = list_init();
   lst->next->val = elem;
 }
 
-Layer layer_init()
+
+/*  LAYER */
+
+Layer *layer_init()
 {
-  Layer lyr = malloc(sizeof(Layer));
+  Layer *lyr = malloc(sizeof(Layer));
   lyr->next = NULL;
-  lyr->pref = NULL;
 }
 
-List layer_get_content(Layer lay)
+Neuro *layer_get_content(Layer *lay)
 {
   return lay->content;
 }
 
-List layer_get_prev_content(Layer lay)
-{
-  return (layer->prev != NULL)?layer->prev->content:list_init();
-}
-
-int layer_is_enter(Layer lay)
-{
-  return lay->prev == NULL;
-}
-
-int layer_is_exit(Layer lay)
+int layer_is_exit(Layer *lay)
 {
   return lay->next == NULL;
 }
-void layer_add(Layer lay, List lst)
+void layer_add(Layer *lay, Neuro *ner)
 {
-  l
+  lay -> next = layer_init();
+  lay->next->content = ner;
+}
+
+
+/*  NEURO */
+
+Neuro *neuro_init()
+{
+  Neuro *ner = malloc(sizeof(Neuro));
+  ner->next = NULL;
+  ner->link = NULL;
+  return ner;
+}
+
+List *neuro_get_link(Neuro *ner)
+{
+  return ner->link;
+}
+
+double neuro_get_weight(Neuro *ner)
+{
+  return ner->weight;
+}
+
+void neuro_set_weight(Neuro *ner,double wei)
+{
+  ner->weight = wei;
+}
+
+void neuro_add(Neuro *ner, List *link)
+{
+  ner->next = neuro_init();
+  ner->next->link = link;
 }
