@@ -56,6 +56,7 @@ Layer *layer_init()
 {
   Layer *lyr = malloc(sizeof(Layer));
   lyr->next = NULL;
+  return lyr;
 }
 
 Neuro *layer_get_content(Layer *lay)
