@@ -18,6 +18,11 @@ typedef struct Layer{
   Neuro *content;
 }Layer;
 
+typedef struct Network{
+  List *enter;
+  Layer *layer;
+}Network;
+
 
 List *list_init();
 size_t list_length(List *lst);
