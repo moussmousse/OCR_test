@@ -4,14 +4,14 @@
 # Compilers and options
 CC=gcc
 CPPFLAGS= -MMD
-CFLAGS= -Wall -Wextra -std=c99 -pedantic -O2 -lm -g
+CFLAGS= -Wall -Wextra -std=c99 -pedantic -O2 -g
 LDFLAGS=
-LDLIBS=
+LDLIBS= -lm
  
 SRC = neuronal_network/list.c neuronal_network/neuro.c  main.c
 OBJ = ${SRC:.c=.o}
 DEP = ${SRC:.c=.d}
- 
+
 all: main
  
 main: ${OBJ}

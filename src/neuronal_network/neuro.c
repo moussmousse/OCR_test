@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 #include "neuro.h"
 
@@ -18,6 +19,8 @@ Network *init_neuro_net_1l(List *param, int nbexit)
   Neuro *exit = neuro_init(); 
   load_link(exit);  //A condition d'avoir les liens dans un .txt
   load_rand_link(exit,lenEnter,nbexit); //First use of N.N.
+  net->layer->content = exit ; 
+  
   return net;
 }
 
@@ -133,3 +136,26 @@ void load_rand_link (Neuro *exit,size_t nbenter,int nbexit)
 
 }
 
+void calcul_weight(Network *net)
+{
+  Neuro *tmp = net->layer->content;
+  while (tmp->next != NULL)
+  {
+    tmp = tmp->next;
+    List *tmplnk = tmp->link;
+    List *tmpent = net->enter;
+    double calc = 0;
+    while (tmplnk->next != NULL && tmpent->next !=NULL)
+    {
+      tmplnk=tmplnk->next;
+      tmpent=tmpent->next;
+      if (tmplnk == NULL || tmpent == NULL)
+      {
+	printf("Problème: le nombre d'entrée != nombre de lien\n");
+	return;
+      }
+      calc = calc+tmplnk->val*tmpent->val; 
+    }
+    tmp->weight=1/(1+exp(-calc));
+  }
+}
