@@ -19,8 +19,7 @@ Network *init_neuro_net_1l(List *param, int nbexit)
   Neuro *exit = neuro_init(); 
   load_link(exit);  //A condition d'avoir les liens dans un .txt
   load_rand_link(exit,lenEnter,nbexit); //First use of N.N.
-  net->layer->content = exit ; 
-  
+  net->layer->content = exit;
   return net;
 }
 
@@ -145,7 +144,7 @@ void calcul_weight(Network *net)
     List *tmplnk = tmp->link;
     List *tmpent = net->enter;
     double calc = 0;
-    while (tmplnk->next != NULL && tmpent->next !=NULL)
+    while (tmplnk->next != NULL || tmpent->next !=NULL)
     {
       tmplnk=tmplnk->next;
       tmpent=tmpent->next;
@@ -157,5 +156,27 @@ void calcul_weight(Network *net)
       calc = calc+tmplnk->val*tmpent->val; 
     }
     tmp->weight=1/(1+exp(-calc));
+  }
+}
+
+/* void learn () prend en paramètre un réseau initialisé et calculé
+ * la valeure souhaité pour les paramètre d'entrée
+ * le pas d'apprentissage
+ */
+void learn (Network *net, List *target,double pas)
+{
+  Neuro *tmpnr = net->layer->content;
+  List *tmptrg = target;
+  while (tmpnr->next != NULL && tmptrg->next != NULL)
+  {
+    tmpnr = tmpnr->next;
+    tmptrg = tmptrg->next;
+    List *tmplnk = tmpnr->link;
+    while (tmplnk->next != NULL)
+    {
+      tmplnk = tmplnk->next;
+      double error =(tmptrg->val-tmpnr->weight)*tmpnr->weight*(1-tmpnr->weight);
+      tmplnk->val=pas*error+tmplnk->val;
+    } 
   }
 }
