@@ -3,20 +3,10 @@
 #include <math.h>
 
 //#include "neuronal_network/list.h"
-#include "neuronal_network/neuro.h"
-
-
-void test_save(){
-  Neuro *n = neuro_init();
-  printf("Exit OK. \n");
-  load_rand_link(n,81,56);
-  printf("Random link OK.\n");
-  save_link(n);
-  printf("Sauvegarde OK.\n");
-}
+#include "neuronal_network/use_neuro.h"
 
 
 int main ()
 {
-  test_save();
+  return 0;
 }

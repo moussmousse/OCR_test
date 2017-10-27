@@ -7,18 +7,16 @@
 
 #include "neuro.h"
 
-Network *init_neuro_net_1l(List *param, int nbexit)
+Network *init_neuro_net_1l(List *param)
 {
   /* Creation de l'entrée */
   Network *net = malloc(sizeof(Network));
   net->enter=list_init();
   creat_enter(net->enter,param); // changer list_init pour tester
-  size_t lenEnter = list_length(net->enter);
 
   /* Creation de la sortie */
   Neuro *exit = neuro_init(); 
   load_link(exit);  //A condition d'avoir les liens dans un .txt
-  load_rand_link(exit,lenEnter,nbexit); //First use of N.N.
   net->layer->content = exit;
   return net;
 }
@@ -32,6 +30,7 @@ void creat_enter(List *enter, List *param)
     tmp = tmp->next;
     param = param->next;
   }
+  printf("Entrées crées.. \n");
 }
 
 void load_link(Neuro *ner)
