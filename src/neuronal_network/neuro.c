@@ -12,13 +12,12 @@ Network *init_neuro_net_1l(List *param, int nbexit)
   Network *net = malloc(sizeof(Network));
   net->enter=list_init();
   creat_enter(net->enter,param); // changer list_init pour tester
-  
+  size_t lenEnter = list_length(net->enter);
+
   /* Creation de la sortie */
   Neuro *exit = neuro_init(); 
   load_link(exit);  //A condition d'avoir les liens dans un .txt
-  printf("%d",nbexit); // A supprimer (supprime une warning xD)
-
-
+  load_rand_link(exit,lenEnter,nbexit); //First use of N.N.
   return net;
 }
 
@@ -40,7 +39,7 @@ void load_link(Neuro *ner)
   char curent;
   if (file == NULL)
   {
-    printf ("Impossible de charger le fichier link.txt");
+    printf ("Impossible de charger le fichier link.txt\n");
     return ;
   }
   Neuro *tmp = ner;
@@ -90,11 +89,18 @@ void load_link(Neuro *ner)
 void save_link(Neuro *ner)
 {
   FILE* file = NULL;
-  file = fopen("link.txt","r+");
+  file = fopen("link.txt","w+");
+  if (file == NULL){
+    printf("Erreur ouverture fichier");
+    return;
+  }
+  printf("File load : OK\n");
   Neuro *tmp = ner;
   while (tmp->next!=NULL)
   {
+    printf("try to put | \n");
     fputc('|',file);
+    printf ("| puted \n");
     List *lnk = tmp->next->link;
     while (lnk->next!=NULL)
     {
@@ -106,5 +112,24 @@ void save_link(Neuro *ner)
     tmp = tmp->next;
   }
   fclose(file);
+}
+
+void load_rand_link (Neuro *exit,size_t nbenter,int nbexit)
+{
+  Neuro *tmp = exit;
+  for (int i = 0 ; i < nbexit ; i++)
+  {
+    tmp->next = neuro_init();
+    tmp = tmp->next;
+    tmp->link = list_init();
+    List *tmplnk = tmp->link;
+    for (size_t j = 0 ; j < nbenter ; j++)
+    {
+      tmplnk->next = list_init();
+      tmplnk = tmplnk->next;
+      tmplnk->val = ((float)rand()/(float)(RAND_MAX))*10.0;
+    }
+  }
+
 }
 
